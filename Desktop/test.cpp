@@ -16,17 +16,17 @@ int main (int argc, char** argv)
 	double pzo = 0;
 	double poz = 0;
 	double poo = 0;
-	double sensordepth = 0;
-	double sensorvelocity = 0;
+	double otherdepth = 0;
+	double othervelocity = 0;
 
 	while ( i < 10 ) {
 		double depth = x; // previous depth
 		double velocity = y; // previous velocity
 		double dt = 0.01; // delta time
 		double accel = z; // previous accel?
-		double ahrsaccelHEAVE = z; //inputs from ahrs
-		sensordepth = sensordepth + ahrsaccelHEAVE * ahrsaccelHEAVE * 0.5 * dt * dt;
-		sensorvelocity = sensorvelocity + ahrsaccelHEAVE * dt;
+		double otheraccel = z; //inputs from somewhere else
+		otherdepth = otherdepth + otheraccel * otheraccel * 0.5 * dt * dt;
+		othervelocity = othervelocity + otheraccel * dt;
 		int s;
 
 		double identity1[] = {1};
@@ -44,8 +44,8 @@ int main (int argc, char** argv)
                        poz, poo};
 		double rk[] = {0.0000000001, 0.00000001,
 		               0.00000001,   0.000001   }; // noise from observations?
-		double zk[] = {sensordepth, 
-		               sensorvelocity };
+		double zk[] = {otherdepth, 
+		               othervelocity };
 		double hk[] = {0.5, 0,
 		               0,   1 };
 		double inva[4];
