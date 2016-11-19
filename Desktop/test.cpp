@@ -42,8 +42,8 @@ int main (int argc, char** argv)
                        0.000001032256,   0.0001032256   }; // noise from environment
 		double pk[] = {pzz, pzo,
                        poz, poo};
-		double rk[] = {1, 100,
-		               100, 1}; // noise from observations?
+		double rk[] = {0.5, 0,
+		               0, 1}; // noise from observations?
 		double zk[] = {sensordepth, 
 		               sensorvelocity };
 		double hk[] = {0.5, 0,
