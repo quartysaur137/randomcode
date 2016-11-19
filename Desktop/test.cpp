@@ -24,9 +24,9 @@ int main (int argc, char** argv)
 		double velocity = y; // previous velocity
 		double dt = 0.001; // delta time
 		double accel = z; // previous accel?
-		double ahrsaccelHEAVE = z; //inputs from ahrs
-		sensordepth = sensordepth + ahrsaccelHEAVE * 0.5 * dt * dt;
-		sensorvelocity = sensorvelocity + ahrsaccelHEAVE * dt;
+		double otheraccel = z; //inputs from ahrs
+		sensordepth = sensordepth + otheraccel * 0.5 * dt * dt;
+		sensorvelocity = sensorvelocity + otheraccel * dt;
 		int s;
 
 		double identity1[] = {1};
