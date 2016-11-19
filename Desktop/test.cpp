@@ -22,10 +22,10 @@ int main (int argc, char** argv)
 	while ( i < 10 ) {
 		double depth = x; // previous depth
 		double velocity = y; // previous velocity
-		double dt = 0.01; // delta time
+		double dt = 0.001; // delta time
 		double accel = z; // previous accel?
 		double ahrsaccelHEAVE = z; //inputs from ahrs
-		sensordepth = sensordepth + ahrsaccelHEAVE * ahrsaccelHEAVE * 0.5 * dt * dt;
+		sensordepth = sensordepth + ahrsaccelHEAVE * 0.5 * dt * dt;
 		sensorvelocity = sensorvelocity + ahrsaccelHEAVE * dt;
 		int s;
 
@@ -42,8 +42,8 @@ int main (int argc, char** argv)
                        0.000001032256,   0.0001032256   }; // noise from environment
 		double pk[] = {pzz, pzo,
                        poz, poo};
-		double rk[] = {0.0000000001, 0.00000001,
-		               0.00000001,   0.000001   }; // noise from observations?
+		double rk[] = {1, 100,
+		               100, 1}; // noise from observations?
 		double zk[] = {sensordepth, 
 		               sensorvelocity };
 		double hk[] = {0.5, 0,
