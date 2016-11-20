@@ -26,9 +26,11 @@ int main (int argc, char** argv)
 		double accel = z; // previous accel?
 		double otheraccel = z; //inputs from ahrs
 		sensordepth = sensordepth + otheraccel * 0.5 * dt * dt;
-		sensorvelocity = sensorvelocity + otheraccel * dt;
+		sensorvelocity = sensorvelocity + otheraccel * dt; // attempting to create some correlation between sensor readings and actual velocity/distance and not make them disconnected (as it's accelerometer/gyroscopic readings)
 		int s;
 
+
+		//whole bunch of array definitions; we then have a whole bunch of matrix definitions
 		double identity1[] = {1};
 		double identity2[] = {1, 0,
 		                      0, 1 };
@@ -42,12 +44,12 @@ int main (int argc, char** argv)
                        0.000001032256,   0.0001032256   }; // noise from environment
 		double pk[] = {pzz, pzo,
                        poz, poo};
-		double rk[] = {0.5, 0,
-		               0, 1}; // noise from observations?
+		double rk[] = {1, 0,
+		               0, -1}; // noise from observations?
 		double zk[] = {sensordepth, 
 		               sensorvelocity };
 		double hk[] = {0.5, 0,
-		               0,   1 };
+		               0,   1 }; // not supposed to be defined explicitly i think but in this case we're just substituting some random values in here
 		double inva[4];
 
 
@@ -75,6 +77,7 @@ int main (int argc, char** argv)
 		gsl_permutation * p = gsl_permutation_alloc (2);
 
 
+		//matrix multiplication stuff for kalman filter calculations.
 		gsl_blas_dgemm (CblasNoTrans, CblasNoTrans, 1.0, &Fk.matrix, &Xk.matrix, 0.0, xkk);
 		gsl_blas_dgemm (CblasNoTrans, CblasNoTrans, 1.0, &Bk.matrix, &Iz.matrix, 1.0, xkk);
 		gsl_blas_dgemm (CblasNoTrans, CblasNoTrans, 1.0, &Fk.matrix, &Pk.matrix, 0.0, qkk);
@@ -100,6 +103,7 @@ int main (int argc, char** argv)
 		gsl_blas_dgemm (CblasNoTrans, CblasNoTrans, 1.0, rkk, &Io.matrix, 0.0, Pkk); // end Update step
 
 
+		//get position/time stuff, covariances, and kalman gain stuff
 		x = gsl_matrix_get (Xkk, 0, 0);
 		y = gsl_matrix_get (Xkk, 1, 0);
 		pzz = gsl_matrix_get (Pkk, 0, 0);
@@ -116,8 +120,6 @@ int main (int argc, char** argv)
 		printf ("%f]\n",y);
 		printf ("[%f, %f\n", pzz, pzo);
 		printf ("%f, %f]\n", poz, poo);
-		printf ("[%f, %f\n", kzz, kzo);
-		printf ("%f, %f]\n", koz, koo);
 		i++;
 	}
 	return 0;
