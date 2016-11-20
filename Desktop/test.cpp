@@ -45,11 +45,11 @@ int main (int argc, char** argv)
 		double pk[] = {pzz, pzo,
                        poz, poo};
 		double rk[] = {1, 0,
-		               0, -1}; // noise from observations?
+		               0, -1}; // noise from observations? not supposed to be defined explicitly i think but in this case we're just substituting some random values in here
 		double zk[] = {sensordepth, 
 		               sensorvelocity };
 		double hk[] = {0.5, 0,
-		               0,   1 }; // not supposed to be defined explicitly i think but in this case we're just substituting some random values in here
+		               0,   1 }; 
 		double inva[4];
 
 
