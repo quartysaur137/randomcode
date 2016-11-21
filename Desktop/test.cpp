@@ -19,7 +19,7 @@ int main (int argc, char** argv)
 	double sensordepth = 0;
 	double sensorvelocity = 0;
 
-	while ( i < 10 ) {
+	while ( i < 10000 ) {
 		double depth = x; // previous depth
 		double velocity = y; // previous velocity
 		double dt = 0.001; // delta time
@@ -44,12 +44,23 @@ int main (int argc, char** argv)
                        0.000001032256,   0.0001032256   }; // noise from environment
 		double pk[] = {pzz, pzo,
                        poz, poo};
-		double rk[] = {1, 0,
-		               0, -1}; // noise from observations? not supposed to be defined explicitly i think but in this case we're just substituting some random values in here
+		double rk[4];
+		if (i%2 == 0) {
+		rk[0]=-1000000;
+		rk[3]=-10000; // noise from observations? not supposed to be defined explicitly i think but in this case we're just substituting some random values in here
+		//rk[] = {-1000000, 0,
+		//        0,        -10000}
+		}
+		else {
+		rk[0]=1000000;
+		rk[3]=10000;
+		//rk[] = {1000000, 0, 
+		//        0,       10000}
+		}
 		double zk[] = {sensordepth, 
 		               sensorvelocity };
 		double hk[] = {0.5, 0,
-		               0,   1 }; 
+		               0,   1 };
 		double inva[4];
 
 
@@ -120,8 +131,8 @@ int main (int argc, char** argv)
 		printf ("%f]\n",y);
 		printf ("[%f, %f\n", pzz, pzo);
 		printf ("%f, %f]\n", poz, poo);
-		printf ("[%g, %g\n", kzz, kzo);
-		printf ("%g, %g]\n", koz, koo);
+		printf ("[%f, %f\n", kzz, kzo);
+		printf ("%f, %f]\n", koz, koo);
 		i++;
 	}
 	return 0;
