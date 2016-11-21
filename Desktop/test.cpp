@@ -120,6 +120,8 @@ int main (int argc, char** argv)
 		printf ("%f]\n",y);
 		printf ("[%f, %f\n", pzz, pzo);
 		printf ("%f, %f]\n", poz, poo);
+		printf ("[%g, %g\n", kzz, kzo);
+		printf ("%g, %g]\n", koz, koo);
 		i++;
 	}
 	return 0;
