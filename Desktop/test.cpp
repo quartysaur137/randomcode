@@ -40,8 +40,8 @@ int main (int argc, char** argv)
 		                0, 1 };
 		double bk[] = {dt*dt*accel*0.5,
 		                dt*accel };
-		double qk[] = {0.00001016, 0.000001016,
-                       0.000001016,   0.00001016   }; // noise from environment
+		double qk[] = {0.000001016, 0.00001016,
+                       0.00001016,   0.000001016   }; // noise from environment
 		double pk[] = {pzz, pzo,
                        poz, poo};
 		double rk[] = {1e7, 0,
