@@ -40,23 +40,12 @@ int main (int argc, char** argv)
 		                0, 1 };
 		double bk[] = {dt*dt*accel*0.5,
 		                dt*accel };
-		double qk[] = {0.00000001032256, 0.000001032256,
-                       0.000001032256,   0.0001032256   }; // noise from environment
+		double qk[] = {0.00001016, 0.000001016,
+                       0.000001016,   0.00001016   }; // noise from environment
 		double pk[] = {pzz, pzo,
                        poz, poo};
-		double rk[4];
-		if (i%2 == 0) {
-		rk[0]=-1000000;
-		rk[3]=-10000; // noise from observations? not supposed to be defined explicitly i think but in this case we're just substituting some random values in here
-		//rk[] = {-1000000, 0,
-		//        0,        -10000}
-		}
-		else {
-		rk[0]=1000000;
-		rk[3]=10000;
-		//rk[] = {1000000, 0, 
-		//        0,       10000}
-		}
+		double rk[] = {1e7, 0,
+		               0, 1e7};  // noise from observations?
 		double zk[] = {sensordepth, 
 		               sensorvelocity };
 		double hk[] = {0.5, 0,
@@ -136,4 +125,5 @@ int main (int argc, char** argv)
 		i++;
 	}
 	return 0;
+	
 }
