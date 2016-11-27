@@ -11,20 +11,20 @@ int main (int argc, char** argv)
 	int i=0;
 	double x=atof(argv[1]);
 	double y=atof(argv[2]);
-	double z=atof(argv[3]);
+	double z=atof(argv[3]); // ignore x,y,z if implementing
 	double pzz = 0;
 	double pzo = 0;
 	double poz = 0;
 	double poo = 0;
 	double sensordepth = 0;
-	double sensorvelocity = 0;
+	double sensorvelocity = 0; // (need to define previous 6 variables for implementation)
 
-	while ( i < 10000 ) {
-		double depth = x; // previous depth
-		double velocity = y; // previous velocity
-		double dt = 0.001; // delta time
-		double accel = z; // previous accel?
-		double otheraccel = z; //inputs from ahrs
+	while ( i < 10000 ) { // do NOT include while loop; this was just for testing
+		double depth = x; // previous depth (depth_prev)
+		double velocity = y; // previous velocity (idk)
+		double dt = 0.001; // delta time (dt)
+		double accel = z; // previous accel? (idk)
+		double otheraccel = z; //inputs from ahrs (depth_accel)
 		sensordepth = sensordepth + otheraccel * 0.5 * dt * dt;
 		sensorvelocity = sensorvelocity + otheraccel * dt; // attempting to create some correlation between sensor readings and actual velocity/distance and not make them disconnected (as it's accelerometer/gyroscopic readings)
 		int s;
@@ -104,8 +104,8 @@ int main (int argc, char** argv)
 
 
 		//get position/time stuff, covariances, and kalman gain stuff
-		x = gsl_matrix_get (Xkk, 0, 0);
-		y = gsl_matrix_get (Xkk, 1, 0);
+		x = gsl_matrix_get (Xkk, 0, 0); // (new depth)
+		y = gsl_matrix_get (Xkk, 1, 0); // (new velocity)
 		pzz = gsl_matrix_get (Pkk, 0, 0);
 		pzo = gsl_matrix_get (Pkk, 0, 1);
 		poz = gsl_matrix_get (Pkk, 1, 0);
