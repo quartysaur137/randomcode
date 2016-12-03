@@ -1,7 +1,9 @@
+#include <math.h>
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_blas.h>
 #include <stdio.h>
 #include <gsl/gsl_linalg.h>
+using namespace std;
 
 // gcc test.cpp -lgsl -lgslcblas -o matrix
 // ./matrix
@@ -44,8 +46,8 @@ int main (int argc, char** argv)
                        0.00001016,   0.000001016   }; // noise from environment
 		double pk[] = {pzz, pzo,
                        poz, poo};
-		double rk[] = {1e7, 0,
-		               0, 1e7};  // noise from observations?
+		double rk[] = {1e7 * (i%2==0 ? 1: -1), 0,
+		               0, 1e7* (i%2==0 ? 1: -1)};  // noise from observations?
 		double zk[] = {sensordepth, 
 		               sensorvelocity };
 		double hk[] = {0.5, 0,
