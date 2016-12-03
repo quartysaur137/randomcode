@@ -14,14 +14,11 @@ int main (int argc, char** argv)
 	double x=atof(argv[1]);
 	double y=atof(argv[2]);
 	double z=atof(argv[3]); // ignore x,y,z if implementing
-	double pzz = 0;
-	double pzo = 0;
-	double poz = 0;
-	double poo = 0;
 	double sensordepth = 0;
 	double sensorvelocity = 0; // (need to define previous 6 variables for implementation)
 
 	while ( i < 10000 ) { // do NOT include while loop; this was just for testing
+		static double pzz, pzo, poz, poo = 0;
 		double depth = x; // previous depth (depth_prev)
 		double velocity = y; // previous velocity (idk)
 		double dt = 0.001; // delta time (dt)
